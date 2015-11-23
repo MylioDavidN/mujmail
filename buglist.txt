@@ -1,0 +1,64 @@
+New bugs
+- when retrieving one my mail the message "email contains illegal mime characters" is displayed, the mail is then not retrieved and additionaly, it is not possible to skip it and retrieve older mails
+- if there is no message in some box, the message "[MailDB]Loading SomeBox .. failed.: 100: Can not open the database" is written to the console
+
+- exception when ending downloading some big mails with attachments
+- when the amount of heap memory is setted to 524kB and MAX_CACHE_SIZE is not set to 0, it is not possible to retrieve mail: OutOfMemoryException is thrown while Decoding message. Setting MAX_CACHE_SIZE to 0 generally on all devices would cause ArrayIndexException ArrayIndexOutOfBoundsException while downloading long mails
+- "Retrieve only never seen mails" doesn't work (still searching for UNSEEN messages when set to false)
+  or I don't understand the purpose of this field - ask Tung
+
+Bugs being fixed
+- posilani mailu: SMTP.run() -> SEND
+    - cely mail se uklada do promenne capturedMailText, aby se pak obsah teto promenne
+        mohl ulozit do slozky sent na IMAP serveru
+    - tohle ale neni kvuli buffer overflow vubec dobre -> melo by se to odesilat
+        uz pri deparsovani - klidne, at se mail deparsuje dvakrat, ale neuklada
+        se takhle do jedne promenne
+- chtelo by to predelat alerty, aby nemizely automaticky, ale cekaly na odkliknuti OK
+
+
+
+
+
+
+
+
+
+
+Notes and historic bugs (not very important yet):
+- pokud dam Retrieve mails a mam zvoleno, ze chci jenom nejaky pocet mailu, tak se zda, ze nenacte ty nejnovejsi (pri komunikaci pres pop3)
+- pri startu se pise "initing mail hash" a trva to dlouho i na emulatoru (treba to zkusit na mobilu).
+
+- pri stahovani bodyPartu hodi java.langNullPointerException (David)
+    - InProtocol radek 471: tam uz musi byt vytvoren RMSStorage
+    - radek 386: proc pridavat body part uz pri parsovani hlavicek? udelat jinak
+    - nesystematicke reseni:
+        - zajistit vytvoreni RMS storage, jedeme dal podle stareho
+    - systematicke reseni
+        - parseHeaders()
+            - predelat, aby se tu parsovali opravdu jen hlavicky - odstranit parsovani hlavicek body partu
+            - tedy by se tu nemelo vyskytovat ani BodyPart ani BodyPart.Header
+        - parseBody()
+            - zde parsovat hlavicky body partu -> zpracovat body party
+            - otazka: jak resti / jak pracuje redownload mode, ...
+        - parseBodyPartHeaders()
+            - pravdepodobne ma dve funkce! parsuje, ale viz take parseHeaders() u multipart mailu
+
+        - u storage udelat metodu prihraj cast dat do daneho storage
+            - u FS storage normalne prihreje do streamu
+            - u db prida dalsi polozku do databaze
+
+            -> pri nacitani body partu, se bude prihravat takto po castech
+            -> pridat metodu nahraj cast z daneho storage
+        - RMS storage se vytvari pri volani saveBodyPart(bp, bf) v parseBody
+            - predelat, abych storage vytvarel uz predtim a saveBodyPart ukladala
+               uz transparentne
+        - body part by v sobe mel mit ulozeny objekt instance TheBox kam patri
+            - RMSStorage se nebude muset pri vzniku krmit DBFilename, RecordID -> urci si samo pri ukladani
+                -> mohou se odstranit metody setDBFileName a setRecordID
+
+        - multipart messages: InProtocol.parseBody: dodelat
+        - zkonsolidovat konstruktory MessageHeader
+        - TheBox.copy() - vymyslet kopirovani BodyPartu
+            - udelat metodu BodyPart.copy()
+            - Storage.copy() udelat aby nehazela vyjimku, ale vyjimku zpracovala a v TheBox.copy() odstranit try block

@@ -1,0 +1,8 @@
+<body>
+<p>Concerns on dynamic loading of objects of JSR75 classes on devices where JSR75 is available and using objects of dummy classes on devices where JSR75 is not available. This is necessary because if some JSR75 class is directly imported, the application cannot run on some devices without JSR75.</p>
+
+<p>The solution of this problem is to import given JSR75 class to the wrapper class that is not imported to any class in the midlet but loaded by Class.forName method. If the loading of the class is not succesful, it means that JSR75 is not available and it is used dummy class. Both dummy class and wrapper class implements given interface and are casted to such interface. For implementation details see class FileSystemFactory. Another solution is to use preprocessor.</p>
+
+<p>The example are classes MyFileConnectionJSR, MyFileConnectionDummy and interface MyFileConnection. Interface MyFileConnection is interface which both two classes implements and that is used for working with them. MyFileConnectionJSR is wrapper class which imports JSR75 class javax.microedition.io.file.FileConnection and uses this class to perform filesystem operation. Method getFileConnection of class FilesystemFactory tryes at first load load class MyFileConnectionJSR. If it is succesfull, the object is created and casted to MyFileConnection. If the exception is thrown, it is loaded class MyFileConnectionDummy with dummy operations.</p>
+
+</body>

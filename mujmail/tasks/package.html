@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+MujMail - Simple mail client for J2ME
+Copyright (C) 2009 David Hauzar <david.hauzar.mujmail@gmail.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+</head>
+<body bgcolor="white">
+
+<p>Provides classes and interfaces for creating, running and managing tasks.</p> 
+
+<p>Basically, task is an action that is runned in a new thread and that is registered before execution and unregistered after the action is done. This enables various managment of such tasks. Tasks also supports displaying a progress of the action to user. User can cancel displaying this progress by pressing Back button. User can also see all running taks and their progresses in Tasks manager. If the task is descendant of {@link mujmail.tasks.StoppableBackgroundTask}, progress contains stop button that enables to stop the task.</p>
+
+<p>Package level classes {@link mujmail.tasks.ProgressManager} and {@link mujmail.tasks.StoppableProgressManager} provides user interface for displaying of progress of {@link mujmail.tasks.BackgroundTask} respectively {@link mujmail.tasks.StoppableBackgroundTask}.</p>
+
+<h3>Defining tasks</h3>
+<p>To define new task, create new class that inheriths either from {@link mujmail.tasks.BackgroundTask} or {@link mujmail.tasks.StoppableBackgroundTask} if the task should be stoppable. Than write the action that should be performed in the task in method {@link mujmail.tasks.BackgroundTask#doWork} that is <code>abstract</code> in parent class.</p>
+
+<p>It is not possible to stop task preemptively. That is why cooperative multitasking must be used. If the task is descendant of {@link mujmail.tasks.StoppableBackgroundTask}, it must control whether it should terminate. {@link mujmail.tasks.StoppableBackgroundTask} implements interface {@link mujmail.tasks.StoppableProgress} that contains method {@link mujmail.tasks.StoppableProgress#stopped}. If this method returns <code>true</code>, the task should terminate.</p>
+
+<p>While running the method {@link mujmail.tasks.BackgroundTask#doWork}, it is possible to display progress of the action to user. Methods of interface {@link mujmail.tasks.Progress} that {@link mujmail.tasks.StoppableBackgroundTask} implements can be used to do this.</p>
+
+<p>When some method of object outside {@link mujmail.tasks.BackgroundTask} or {@link mujmail.tasks.StoppableBackgroundTask} is called from and it makes sence to display progress to user or to stop the task during the execution of such method, such method should have parameter of type {@link mujmail.tasks.Progress} respectively {@link mujmail.tasks.StoppableProgress}. The method will be than called with <code>this</code> in the place of such argument. The method can than use methods of such interface to display the progress to the user or to terminate itself.</p>
+
+<p>It is also possible to disable displaying progress of task to user by calling method {@link mujmail.tasks.BackgroundTask#disableDisplayingProgress} before starting the task.</p>
+
+
+<h3>Starting tasks</h3>
+<p>To start the task call method <code>start</code>. Before the task is started, it is checked whether number of running tasks of the same class is less than given limit. If it is not possible to start the task immediately, the dialog where user can cancel running the task is displayed. It is possible to disable displaying this dialog by calling method {@link mujmail.tasks.BackgroundTask#disableDisplayingUserActionRunnerUI} before starting the task. The task is placed between waiting tasks and it is started when the number of tasks of the same class is less than limit. </p>
+
+<p>To start the task immediately, without the check if there are less tasks of the same class than given limit started, call method {@link mujmail.tasks.BackgroundTask#disableCheckBeforeStarting} before starting the task.</p>
+
+
+<h3>Observing tasks progress</h3>
+<p>It is possible to register to receive notifications every time the progress of the given task is changed. The list of events that are received is descibed in enumeration class {@link mujmail.tasks.TaskEvents}. Classes {@link mujmail.tasks.BackgroundTask} and {@link mujmail.tasks.StoppableBackgroundTask} are descendats of class {@link mujmail.util.Observable} that provides methods for registering and unregistering objects that want to listen to these events.</p>
+
+
+<h3>Managing tasks</h3>
+There is class {@link mujmail.tasks.TasksManager} for managing tasks. Class {@link mujmail.tasks.TasksManagerUI} provides user interface for some task managment features such as displaying list of running or waiting tasks or displaying progress of running tasks.
+
+<h3>Running actions on task start or task end</h3>
+<p>It is possible to recieve notifications everty time some task starts or terminates. To register for recieving such events there are methods {@link mujmail.tasks.TasksManager#addEndTaskObserver} and {@link mujmail.tasks.TasksManager#addStartTaskObserver}. Than, it is possible to check given condition every time some task starts or terminates and if it is true, run given action using class {@link mujmail.tasks.ConditionalActionRunner}. For displaying user interface to users in case that it is possible to use class {@link mujmail.tasks.ConditionalActionRunnerUI}.</p>
+
+
+<h2>Package Specification</h2>
+
+(none)
+
+
+<h2>Related Documentation</h2>
+
+(none)
+
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

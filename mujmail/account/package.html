@@ -1,0 +1,11 @@
+<body>
+<p>Mail accounts store information about email servers and information needed for connecting to them.</p>
+
+<p>Mail accounts are stored in mujMail object and can be retrieved by {@link mujmail.MujMail#getMailAccounts()}.</p>
+
+<p> There are two types of mail accounts. Primary accounts are stored in persistent database ACCOUNTS, are primary source of information about account, are shown to user. Derived accounts are used only by user folders to customize primary accounts behavior and are invisible to users.</p>
+
+<p>Class {@link mujmail.account.AccountSettings} is responsible for managing accounts. It loads accounts during mujMail startup, create new account, save them, shows form for editing settings.</p>
+
+<p>Class {@link mujmail.account.Sync} is responsible for backuping and restoring accounts and others configuration settings. Synchronization can be invoked by calling {@link mujmail.account.Sync#startSyncDlg}</p>
+</body>

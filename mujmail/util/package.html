@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+MujMail - Simple mail client for J2ME
+Copyright (C) 2009 David Hauzar <david.hauzar.mujmail@gmail.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+</head>
+<body bgcolor="white">
+
+<p>Provides functions that are used in whole application. Classes in this package can be divided into five groups:</p> 
+
+<ul>
+	<li>Class that provides decoding fu</li>
+	<li>Classes that provides decoding and generic purpose functions and . </li>
+	<li>Classes provides functionality of observing objects.</li>
+	<li>Classes provides functionality of buffering.</li>
+	<li>Classes provides functionality of persistent saving and loading variables.</li>
+	<li>Interfaces used in whole application.</li>
+</ul>
+
+<h3>Decoding and generic purpose functions</h3>
+<p>Decoding functions provides class {@link mujmail.util.Decode}. Generic purpose functions are contained in class {@link mujmail.util.Functions}.</p>
+
+<h3>Observing objects</h3>
+<p>Observing objects can be used for implementation of model-view paradigm. The object that should be observable have to be subclass of {@link mujmail.util.Observable}. Objects that want to receive notifications when observable object is changed have to implement interface {@link mujmail.util.Observer} and have to register itself to observable object using methods of class {@link mujmail.util.Observable}. </p>
+
+<h3>Buffering</h3>
+<p>If it is necessary to write some data not immediately, but later, class {@link mujmail.util.OutputBuffer} can be subclassed to implement such functionality. Class {@link mujmail.util.OutputBuffer} provides functions to write data from the buffer if the seize of data is bigger than gven limit or when it is out of the memory. There are yet implemented buffers for various types of data - for instance {@link mujmail.util.OutputBuffer.OutputStreamBuffer} that can be used for writing array of bytes into stream.</p>
+
+<h3>Persistent saving and loading of variables</h3>
+<p>For saving variables to persistent storage and loading it there is an abstract class {@link mujmail.util.ValuePersistentReminder}. It's implementation {@link mujmail.util.ValuePersistentReminder.BooleanValuePersistentReminder} can be used for saving and loading boolean variables.</p>
+
+
+<h2>Package Specification</h2>
+
+(none)
+
+
+<h2>Related Documentation</h2>
+
+(none)
+
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

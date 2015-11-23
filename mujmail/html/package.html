@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+MujMail - Simple mail client for J2ME
+Copyright (C) 2009 David Hauzar <david.hauzar.mujmail@gmail.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+</head>
+<body bgcolor="white">
+
+<p>
+Contains classes which deal with HTML body parts parsing. 
+</p>
+
+<p>
+{@link mujmail.html.Parser Parser} class is responsible for parsing HTML stream.
+There are some requirements for Parser functionality:
+<ul>
+<li>it should be the as simple as possible in meaning of robustness - we do not
+require to handle every error in HTML stream (like missing closing tag,
+incorrectly paired tags). Parser is not validating the input just wants to
+highlight some subset of HTML tags</li>
+<li>parser have to process incomplete HTML source. It's available in mujMail to
+limit number of downloaded bytes/lines of e-mail so generally we cannot expect
+correctly paired tags not even closed (HTML can ends with "<b" for example and
+we do not know if that had to be b or br tag)</li>
+</ul>
+</p>
+
+<p>
+When stream is parsed, vector of elements is returned.<br>
+For drawing of these elements we need just to call draw method as we assume that
+vector of elements is vector of instances implementing
+{@link mujmail.html.Drawable Drawable} interface.
+</p>
+
+@see mujmail.html.Parser
+@see mujmail.html.Browser
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+MujMail - Simple mail client for J2ME
+Copyright (C) 2009 David Hauzar <david.hauzar.mujmail@gmail.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+</head>
+
+<body>
+<p bgcolor="white">
+
+<p>Provides classes for transforming pointer events produced by touchscreen to higher level events. There are currently implemented higher level events that emulates keyboard.</p>
+
+<h3>Adding touchscreen support to custom user interface class</h3>
+To listen to mujMail high level pointer events define class implementing interface {@link mujmail.pointer.MujMailPointerEventListener} and create object of this class. Than, create object of class {@link mujmail.pointer.MujMailPointerEventProducer}. Pass the instance of {@link mujmail.pointer.MujMailPointerEventListener} created in previous step to the constructor of this object. Than, J2ME low level pointer events must be catched - to do this overload methods {@link javax.microedition.lcdui.Canvas#pointerPressed}, {@link javax.microedition.lcdui.Canvas#pointerDragged} and {@link javax.microedition.lcdui.Canvas#pointerReleased} and call appropriate methods of newly created object. Now, every time when some mujMail event is produced, appropriate method on {@link mujmail.pointer.MujMailPointerEventListener} is called</p>
+
+<p>To implement interface {@link mujmail.pointer.MujMailPointerEventListener}, adapter class {@link mujmail.pointer.MujMailPointerEventListener.MujMailPointerEventListenerAdapter} should be used. This prevents compilations errors when some new method to interface {@link mujmail.pointer.MujMailPointerEventListener} is added. Than, it does not force user to implement all methods of this interface it is not needed.</p>
+
+<h3>Creating new pointer events</h3>
+<p>To create new pointer event, subclass class {@link mujmail.pointer.MujMailPointerEvent}. In method {@link mujmail.pointer.MujMailPointerEvent#handleEvent(mujmail.pointer.MujMailPointerEventListener)} the event should call some method on listener passed as the argument of this method. If it should be some new action, new method to interface {@link mujmail.pointer.MujMailPointerEventListener} must be added. </p>
+
+<p>Than, the event must be produced. That is why methods in class {@link mujmail.pointer.MujMailPointerEventProducer} producing events - that means for example method {@link mujmail.pointer.MujMailPointerEventProducer#transformPointerPressed(int, int)} - must be changed in order to produce new event. Another possibility is to create descendant of {@link mujmail.pointer.MujMailPointerEventProducer} that will override such methods and than use object of this new class to produce events instead of object of class {@link mujmail.pointer.MujMailPointerEventProducer}.</p>
+
+
+
+<h2>Package Specification</h2>
+
+(none)
+
+
+<h2>Related Documentation</h2>
+
+(none)
+
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

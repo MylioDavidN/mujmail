@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+MujMail - Simple mail client for J2ME
+Copyright (C) 2009 David Hauzar <david.hauzar.mujmail@gmail.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+</head>
+<body bgcolor="white">
+
+<p>Provides classes for search capability. Classes in this package can be divided into two groups:</p> 
+
+<ul>
+	<li>User iterface classes that enable user to enter search settings or display search results. </li>
+	<li>Classes used to find messages that fulfill given criteria.</li>
+</ul>
+
+<h3>User interface</h3>
+<p>All user interface functions are accessible using static methods of class {@link mujmail.search.SearchWindows}. It provides methods both for displaying dialog where user can enter search settings and for displaying results of the search. Settings dialog remembers message parts selected to search in and boxes selected to search in using {@link mujmail.util.SaveableSelectedState} and {@link mujmail.util.WasSelectedReminder}. The results of the search are displayed using class {@link mujmail.search.SearchBox}.</p>
+
+<p>Each matched message contains information about occurences of search phrases found in the message. This information is accessible via method {@link mujmail.MessageHeader#getSearchResult}. This information can be later used for better displaynig of search results in {@link mujmail.search.SearchBox}.</p>
+
+
+<h3>Running search</h3>
+Searching is runned by executing method {@link mujmail.search.SearchCore#search}.
+
+<h3>Search algorithm</h3>
+<p>Method {@link mujmail.search.SearchCore#search} enumerates all messages in all boxes contained in search settings. If the message matches search criteria specified in search settings, it is added to search box.</p> 
+
+<p>The message matches if the date of the message is in interval specified in search settings and if the message matches given search phrases.</p>
+
+<p>Search phrases are represented by class {@link mujmail.search.SearchPhrase}. This class provides method {@link mujmail.search.SearchPhrase#findFirstMatch} that finds first occurence of the phrase in given message. This method lists all message parts in that the phrase should be searched and search the phrase there.</p> 
+
+<p>Message parts that should be searched in are represented by class {@link mujmail.search.SearchMessagePart}. This class provides method {@link mujmail.search.SearchMessagePart#findFirstMatch} that finds first match of given search phrase in this message part. This method is <code>abstract</code>, this means that every concrete searchable message part must implemlement searching itself.</p>
+
+<h3>Fulltext search and search modes</h3>
+<p>Most of searchable message parts uses fulltext search in string. Object that provides fulltext searching is accessible by calling method {@link mujmail.search.SearchCore.getFulltextSearcher}. </p>
+
+<p>Method {@link mujmail.search.FulltextSearcher#searchInString} uses instance of class {@link mujmail.search.FulltextSearchAlgorithm} for searching the string and {@link mujmail.search.FulltextSearchModes} stored in {@link mujmail.search.SearchPhrase} to check whether the location of the string matches the {@link mujmail.search.FulltextSearchModes}. This means that the location of string meets given condition - for example it is whole word etc.</p>
+
+<h3>Implementing new fulltext search algorithm</h3>
+<p>To implement new algorithm for fulltext searching, implement the interface {@link mujmail.search.FulltextSearchAlgorithm}. To make new search algorithm used while searching, create instance of class {@link mujmail.search.FulltextSearcher} with new search algorithm as the parameter and make method {@link mujmail.search.SearchCore#getFulltextSearcher} to return this instance.</p>
+
+
+
+<h2>Package Specification</h2>
+
+(none)
+
+
+<h2>Related Documentation</h2>
+
+(none)
+
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

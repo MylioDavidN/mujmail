@@ -1,0 +1,14 @@
+<body>
+<p>Contains (network) transmission related staff - manage connections, encryption, compression and buffering. Connections are both directional.
+
+<p>There two important interfaces.
+<ul>
+  <li>{@link mujmail.connections.ConnectionInterface} is outer interface that uses all other components of mujMail (mainly in protocol parsing classes in {@link mujmail.protocols} package). Creates ilusion of line oriented buffered input and string accepting output.</li>
+  <li>{@link mujmail.connections.ConnectorInterface} is internal interface to be used only in this package. Interface is intended to create unified vision on different streams for sending data (into file, over network, GZip compression). It's the most low level communication component. Most typically is used for communication with mail servers.</li>
+</ul>
+
+<p>The most important class that is used outside this package is {@link mujmail.connections.ConnectionCompressed}
+
+<p>To enable debug print use {@link mujmail.Properties#debugConnections}
+
+</body>

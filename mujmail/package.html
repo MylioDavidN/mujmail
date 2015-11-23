@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+<!--
+
+MujMail - Simple mail client for J2ME
+Copyright (C) 2009 David Hauzar <david.hauzar.mujmail@gmail.com>
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+</head>
+
+<body>
+<p bgcolor="white">
+
+<p>Classes in this package can be divided into this groups:</p>
+
+<ul>
+	<li>Main class of the application.</li>
+	<li>Classes representing an email.</li>
+	<li>Classes used to store the content of emails in persistent storage.</li>
+	<li>Classes representing boxes that contain emails.</li>
+	<li>Classes containing settings and properties of the application.</li>
+	<li>Class used for localization.</li>
+	<li>Classes representing user interface components for sending mails.</li>
+	<li>Classes representing other user interface components such as address book or menu.</li>
+	<li>Classes used for exporting mails and bodyparts to the filesystem.</li>
+	<li>Class holding all ever seen mails.</li>
+	<li>Other classes.</li>
+</ul>
+
+<h3>Representing an email</h3>
+<p>An email is represented by class {@link mujmail.MessageHeader}. This class contains information contained in a header of the email and list of body parts - email body and email attachments. Body part is represented by class {@link mujmail.BodyPart}. It contains information about the body part and object of class {@link mujmail.ContentStorage} that stores the content of the storage. All this information are stored persistently in RMS database.</p>
+
+<h3>Storign the content of an email in persistent storage</h3>
+<p>The content of a body part of an email is represented by abstract class {@link mujMailContentStorage}. There are now two implementation of this class. {@link mujmail.RMSStorage} is used to store the content of body part in RMS database. It uses class {@link mujmail.MailDB} for saving and loading fragments of the content from RMS database. {@link mujmail.FSStorage} is used to store the content of body part in file in file system of the phone. It does not support writing new content to the storage yet so it is now used only to represent body parts that user attached to the mail when writing an email.</p>
+
+
+
+
+<h2>Package Specification</h2>
+
+(none)
+
+
+<h2>Related Documentation</h2>
+
+(none)
+
+<!-- Put @see and @since tags down here. -->
+
+</body>
+</html>

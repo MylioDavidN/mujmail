@@ -1,0 +1,16 @@
+<body>
+<p>Orderings are used for specify how to sort entrie, usually mail header is Inbox.</p>
+
+<p>{@link mujmail.ordering.Ordering} specify if sorting goes from
+    smaller (letter a) towards bigger (letter z) {@link mujmail.ordering.Ordering#NATURAL}
+     or in reversed way {@link mujmail.ordering.Ordering#UNNATURAL}. 
+     To obtain ordering instance {@link mujmail.ordering.Ordering#valueOf} method can by used.</p>
+
+<p>{@link mujmail.ordering.Criterion} is used for specifing key used for sorting. Most usual is Time.
+     To obtain specific Cretetion instance {@link mujmail.ordering.Criterion#valueOf} method can by used.</p>
+
+<p>{@link mujmail.ordering.ComparatorStrategy} is used for converting given 
+  {@link mujmail.ordering.Criterion} and {@link mujmail.ordering.Ordering} into {@link mujmail.ordering.Comparator}
+  that can be used for sorting.<p>
+
+</body>
