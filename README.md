@@ -1,6 +1,8 @@
 # mujmail
 (c) Pavel Machek, Petr Spatka, Martin Stefan, Nguyen Son Tung, Nodir Yuldashev, David Hauzar, David T. Nguyen, Martin Šuška, Pavel Jancik, April 2009
 
+Website: http://mujmail.org/
+
 NOTE: In this revision MessageHeader format have been modified (added message flag indicator).
       Please CLEAR MESSAGE DATABASES before using this revision (choose 'sync w\ Servers' for
       synchronization with servers).
